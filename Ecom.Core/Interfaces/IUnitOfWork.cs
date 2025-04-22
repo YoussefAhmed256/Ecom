@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ecom.Core.Interfaces
 {
-    public interface IUunitOfWork
+    public interface IUnitOfWork
     {
         public IProductRepository ProductRepository { get; }
         public ICategoryRepository CategoryRepository { get; }

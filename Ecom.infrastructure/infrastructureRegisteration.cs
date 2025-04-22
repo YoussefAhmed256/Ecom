@@ -1,6 +1,8 @@
 ﻿using Ecom.Core.Interfaces;
+using Ecom.Core.Services;
 using Ecom.infrastructure.Data;
 using Ecom.infrastructure.Repositries;
+using Ecom.infrastructure.Repositries.Service;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -18,7 +20,9 @@ namespace Ecom.infrastructure
         {
             services.AddScoped(typeof(IGenericRepositry<>),typeof(GenericRepositry<>));
             // Apply Unit Of Work 
-            services.AddScoped<IUunitOfWork, UunitOfWork>();
+            services.AddScoped<IUnitOfWork, UunitOfWork>();
+            services.AddSingleton<IImageMnagementSrvice, ImageMnagementSrvice>();
+
             // Apply Db Context
             services.AddDbContext<AppDBContext>(options =>
             {

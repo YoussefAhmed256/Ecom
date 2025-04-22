@@ -1,4 +1,5 @@
 using Ecom.infrastructure;
+using Microsoft.Extensions.FileProviders;
 namespace Ecom.API
 {
     public class Program
@@ -14,6 +15,17 @@ namespace Ecom.API
             builder.Services.AddEndpointsApiExplorer();
             builder.Services.AddSwaggerGen();
             builder.Services.infrastructureConfiguration(builder.Configuration);
+            builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+            builder.Services.AddSingleton<IFileProvider>(sp =>
+            {
+                var env = sp.GetRequiredService<IWebHostEnvironment>();
+
+                var root = Path.Combine(env.ContentRootPath, "wwwroot");
+                if (!Directory.Exists(root))
+                    Directory.CreateDirectory(root);
+
+                return new PhysicalFileProvider(root);
+            });
 
             var app = builder.Build();
 
